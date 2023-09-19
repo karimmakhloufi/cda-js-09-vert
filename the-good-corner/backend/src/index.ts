@@ -24,6 +24,8 @@ app.post("/ad", (req, res) => {
 
 app.delete("/ad", adsController.delete);
 
+app.put("/ad", adsController.put);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
