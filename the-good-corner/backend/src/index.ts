@@ -1,8 +1,9 @@
-import express from "express";
+import express, { Express } from "express";
 
 import { ads } from "./data";
+import adsController from "./controllers/adsController";
 
-const app = express();
+const app: Express = express();
 const port: number = 3000;
 
 app.use(express.json());
@@ -20,6 +21,8 @@ app.post("/ad", (req, res) => {
   ads.push(req.body);
   res.send("The ad has been added");
 });
+
+app.delete("/ad", adsController.delete);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

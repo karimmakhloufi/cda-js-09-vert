@@ -16,3 +16,12 @@ Content-Type: application/json
     "location": "Paris",
     "createdAt": "2023-09-05T10:13:14.755Z"
   }
+
+###
+
+DELETE http://localhost:3000/ad
+Content-Type: application/json
+
+{
+  "id": 0
+}
