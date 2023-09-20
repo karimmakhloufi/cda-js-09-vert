@@ -9,8 +9,36 @@ const adsController = {
     });
   },
   put: (req: Request, res: Response) => {
-    ads[req.body.idToEdit] = req.body.newAd;
-    res.send("The ad has been edited");
+    db.run(
+      `
+        UPDATE ad
+        SET
+          title=?,
+          description=?,
+          price=?,
+          createdAt=?,
+          picture=?,
+          ville=?,
+          categorie=?
+        WHERE id=?
+      `,
+      [
+        req.body.newAd.title,
+        req.body.newAd.description,
+        req.body.newAd.price,
+        req.body.newAd.createdAt,
+        req.body.newAd.picture,
+        req.body.newAd.location,
+        req.body.newAd.categorie,
+        req.body.idToEdit,
+      ],
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+        res.send("The ad has been edited");
+      }
+    );
   },
 };
 

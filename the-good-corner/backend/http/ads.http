@@ -31,14 +31,14 @@ PUT http://localhost:3000/ad
 Content-Type: application/json
 
 {
-  "idToEdit" :0,
+  "idToEdit": 3,
   "newAd": {
     "id" : 0,
-    "title": "Train to sell",
+    "title": "hoverboard",
     "description":
-      "My train is green, working fine. I'm selling it because I've got a new one",
-    "owner": "train.seller@gmail.com",
-    "price": 2000000,
+      "My hoverboard is green, working fine. I'm selling it because I've got a new one",
+    "owner": "hoverboard.seller@gmail.com",
+    "price": 555,
     "picture":"https://images.lecho.be/view?iid=dc:113129565&context=ONLINE&ratio=16/9&width=640&u=1508242455000",
     "location": "Paris",
     "createdAt": "2023-09-05T10:13:14.755Z"
