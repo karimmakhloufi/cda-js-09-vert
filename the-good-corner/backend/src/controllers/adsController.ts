@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { ads } from "../data";
+import { db } from "../index";
 
 const adsController = {
   delete: (req: Request, res: Response) => {
-    ads.splice(req.body.id, 1);
-    res.send("The ad has been deleted");
+    db.run("DELETE FROM ad WHERE ID = ?;", [req.body.id], () => {
+      res.send("The ad has been deleted");
+    });
   },
   put: (req: Request, res: Response) => {
     ads[req.body.idToEdit] = req.body.newAd;
