@@ -1,4 +1,4 @@
-/*CREATE TABLE ad
+CREATE TABLE ad
 (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	title TEXT NOT NULL,
@@ -10,9 +10,7 @@
     ville TEXT,
     categorie TEXT
 );
-*/
 
- /*
 INSERT INTO ad (title, description, owner, price, ville)
  VALUES
 ('Boat to sell', 'My Boat is red, working fine.','Boat.seller@gmail.com', 140000, 'Bordeaux'),
@@ -37,11 +35,10 @@ INSERT INTO ad (title, description, owner, price, ville)
  ('Pant to sell', 'My Pant to sell, very large', 'Pant.seller@gmail.com', 40, 'Bordeaux'),
  ('Mirror to sell', 'My mirror to sell, very luxuary', 'Mirror.seller@gmail.com', 650, 'Paris')
  ;
-*/
 
 -- SELECT * FROM ad;
 
-/*SELECT * FROM ad
+/* SELECT * FROM ad
 WHERE ville Like "Lyon";*/
 
 /*DELETE FROM ad
