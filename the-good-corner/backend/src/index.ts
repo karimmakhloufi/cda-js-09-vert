@@ -8,39 +8,24 @@ const port: number = 3000;
 
 export const db = new sqlite3.Database("good_corner.sqlite");
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS AD (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    title text,
+    description text,
+    owner text,
+    price real,
+    createdAt text,
+    location text,
+    picture text
+  );
+`);
+
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World from typescript app with live reload");
-});
-
-app.get("/ad", (req, res) => {
-  db.all("SELECT * from AD", (err, rows) => {
-    res.send(rows);
-  });
-});
-
-app.post("/ad", (req, res) => {
-  console.log(req.body);
-  db.run(
-    `
-    INSERT INTO ad (title, description, owner, price, ville)
-    VALUES (
-      "${req.body.title}",
-      "${req.body.description}",
-      "${req.body.owner}",
-      "${req.body.price}",
-      "${req.body.location}"
-    );
-  `,
-    (err: any, rows: any) => {
-      res.send("The ad has been added");
-    }
-  );
-});
-
+app.get("/ad", adsController.read);
+app.post("/ad", adsController.create);
 app.delete("/ad", adsController.delete);
-
 app.put("/ad", adsController.put);
 
 app.listen(port, () => {

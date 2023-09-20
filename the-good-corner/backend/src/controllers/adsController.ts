@@ -1,8 +1,31 @@
 import { Request, Response } from "express";
-import { ads } from "../data";
 import { db } from "../index";
 
 const adsController = {
+  read: (req: Request, res: Response) => {
+    db.all("SELECT * from AD", (err, rows) => {
+      res.send(rows);
+    });
+  },
+  create: (req: Request, res: Response) => {
+    db.run(
+      `
+      INSERT INTO ad (title, description, owner, price, location, createdAt, picture)
+      VALUES (
+        "${req.body.title}",
+        "${req.body.description}",
+        "${req.body.owner}",
+        "${req.body.price}",
+        "${req.body.location}",
+        "${req.body.createdAt}",
+        "${req.body.picture}"
+      );
+    `,
+      (err: any, rows: any) => {
+        res.send("The ad has been added");
+      }
+    );
+  },
   delete: (req: Request, res: Response) => {
     db.run("DELETE FROM ad WHERE ID = ?;", [req.body.id], () => {
       res.send("The ad has been deleted");
@@ -18,8 +41,7 @@ const adsController = {
           price=?,
           createdAt=?,
           picture=?,
-          ville=?,
-          categorie=?
+          location=?
         WHERE id=?
       `,
       [
@@ -29,7 +51,6 @@ const adsController = {
         req.body.newAd.createdAt,
         req.body.newAd.picture,
         req.body.newAd.location,
-        req.body.newAd.categorie,
         req.body.idToEdit,
       ],
       (err) => {
