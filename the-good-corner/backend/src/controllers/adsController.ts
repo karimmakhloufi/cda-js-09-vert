@@ -1,72 +1,10 @@
 import { Request, Response } from "express";
-import { db } from "../index";
 
 const adsController = {
-  read: (req: Request, res: Response) => {
-    db.all("SELECT * from AD", (err, rows) => {
-      res.send(rows);
-    });
-  },
-  create: (req: Request, res: Response) => {
-    db.run(
-      `
-      INSERT INTO ad (title, description, owner, price, location, createdAt, picture, category_id)
-      VALUES (
-        "${req.body.title}",
-        "${req.body.description}",
-        "${req.body.owner}",
-        "${req.body.price}",
-        "${req.body.location}",
-        "${req.body.createdAt}",
-        "${req.body.picture}",
-        "${req.body.category_id}"
-      );
-    `,
-      (err: any, rows: any) => {
-        if (err) {
-          console.log("error", err);
-          res.send("Error while adding the ad");
-        } else {
-          res.send("The ad has been added");
-        }
-      }
-    );
-  },
-  delete: (req: Request, res: Response) => {
-    db.run("DELETE FROM ad WHERE ID = ?;", [req.body.id], () => {
-      res.send("The ad has been deleted");
-    });
-  },
-  put: (req: Request, res: Response) => {
-    db.run(
-      `
-        UPDATE ad
-        SET
-          title=?,
-          description=?,
-          price=?,
-          createdAt=?,
-          picture=?,
-          location=?
-        WHERE id=?
-      `,
-      [
-        req.body.newAd.title,
-        req.body.newAd.description,
-        req.body.newAd.price,
-        req.body.newAd.createdAt,
-        req.body.newAd.picture,
-        req.body.newAd.location,
-        req.body.idToEdit,
-      ],
-      (err) => {
-        if (err) {
-          console.log(err);
-        }
-        res.send("The ad has been edited");
-      }
-    );
-  },
+  read: (req: Request, res: Response) => {},
+  create: (req: Request, res: Response) => {},
+  delete: (req: Request, res: Response) => {},
+  put: (req: Request, res: Response) => {},
 };
 
 export default adsController;
