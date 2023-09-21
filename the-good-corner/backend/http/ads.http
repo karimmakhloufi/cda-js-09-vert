@@ -23,7 +23,7 @@ DELETE http://localhost:3000/ad
 Content-Type: application/json
 
 {
-  "id": 0
+  "id": 1
 }
 
 ###
