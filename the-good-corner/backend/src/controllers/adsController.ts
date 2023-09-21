@@ -10,7 +10,7 @@ const adsController = {
   create: (req: Request, res: Response) => {
     db.run(
       `
-      INSERT INTO ad (title, description, owner, price, location, createdAt, picture)
+      INSERT INTO ad (title, description, owner, price, location, createdAt, picture, category_id)
       VALUES (
         "${req.body.title}",
         "${req.body.description}",
@@ -18,11 +18,17 @@ const adsController = {
         "${req.body.price}",
         "${req.body.location}",
         "${req.body.createdAt}",
-        "${req.body.picture}"
+        "${req.body.picture}",
+        "${req.body.category_id}"
       );
     `,
       (err: any, rows: any) => {
-        res.send("The ad has been added");
+        if (err) {
+          console.log("error", err);
+          res.send("Error while adding the ad");
+        } else {
+          res.send("The ad has been added");
+        }
       }
     );
   },
