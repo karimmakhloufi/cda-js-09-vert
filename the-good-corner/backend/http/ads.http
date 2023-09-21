@@ -6,7 +6,6 @@ POST http://localhost:3000/ad
 Content-Type: application/json
 
 {
-    "id": 3,
     "title": "Boat to sell",
     "description":
       "My boat is green, working fine. I'm selling it because I've got a new one",

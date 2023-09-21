@@ -5,6 +5,7 @@ const dataSource = new DataSource({
   database: "../good_corner.sqlite",
   entities: ["src/entities/*.ts"],
   synchronize: true,
+  logging: ["query", "error"],
 });
 
 export default dataSource;

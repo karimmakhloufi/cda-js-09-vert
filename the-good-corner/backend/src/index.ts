@@ -1,16 +1,17 @@
 import "reflect-metadata";
 import express, { Express } from "express";
 import dataSource from "../config/db";
+import adsController from "./controllers/adsController";
 
 const app: Express = express();
 const port: number = 3000;
 
 app.use(express.json());
 
-/*
-
 app.get("/ad", adsController.read);
 app.post("/ad", adsController.create);
+
+/*
 app.delete("/ad", adsController.delete);
 app.put("/ad", adsController.put);
 
