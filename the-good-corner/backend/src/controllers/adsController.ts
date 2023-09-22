@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Ad } from "../entities/ad";
+// import { Tag } from "../entities/tag";
 
 const adsController = {
   read: async (_req: Request, res: Response) => {
@@ -7,6 +8,7 @@ const adsController = {
       const result = await Ad.find({
         relations: {
           category: true,
+          tags: true,
         },
       });
       res.send(result);
@@ -17,13 +19,12 @@ const adsController = {
   create: async (req: Request, res: Response) => {
     try {
       /*
-      const newAd = new Ad();
-      newAd.title = req.body.title;
-      newAd.price = req.body.price;
-      newAd.description = req.body.description;
+      const newAd = Ad.create(req.body);
+      const tagsToAssociate = await Tag.find(req.body.tags);
+      newAd.tags = tagsToAssociate;
+
       await newAd.save();
       */
-
       await Ad.save(req.body);
       res.send("Ad has been created");
     } catch (err) {

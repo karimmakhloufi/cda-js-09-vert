@@ -2,10 +2,13 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Category } from "./category";
+import { Tag } from "./tag";
 
 @Entity()
 export class Ad extends BaseEntity {
@@ -35,4 +38,10 @@ export class Ad extends BaseEntity {
   // Many to One relationship (many ads one category)
   @ManyToOne(() => Category, (category) => category.ads)
   category: Category;
+
+  // an ad can have multiple tags
+  // a tag can have multiple ads
+  @JoinTable()
+  @ManyToMany(() => Tag, (tag) => tag.ads)
+  tags: Tag[];
 }

@@ -1,0 +1,10 @@
+GET http://localhost:3000/tag
+
+###
+
+POST http://localhost:3000/tag
+Content-Type: application/json
+
+{
+    "name": "on sale"
+}
