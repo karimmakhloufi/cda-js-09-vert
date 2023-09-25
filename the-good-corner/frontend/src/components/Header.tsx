@@ -1,12 +1,14 @@
+import Link from "next/link";
+
 const Header = () => {
   return (
     <header className="header">
       <div className="main-menu">
         <h1>
-          <a href="/" className="button logo link-button">
+          <Link href="/" className="button logo link-button">
             <span className="mobile-short-label">TGC</span>
             <span className="desktop-long-label">THE GOOD CORNER</span>
-          </a>
+          </Link>
         </h1>
         <form className="text-field-with-button">
           <input className="text-field main-search-field" type="search" />
