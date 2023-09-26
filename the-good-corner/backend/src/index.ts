@@ -1,13 +1,15 @@
 import "reflect-metadata";
 import express, { Express } from "express";
+import cors from "cors";
 import dataSource from "../config/db";
 import adsController from "./controllers/adsController";
 import categoryController from "./controllers/categoryController";
 import tagController from "./controllers/tagController";
 
 const app: Express = express();
-const port: number = 3000;
+const port: number = 4000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/ad", adsController.read);

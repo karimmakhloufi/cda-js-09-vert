@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import AdCard, { AdCardProps } from "./AdCard";
 
 const RecentAds = () => {
   const [total, setTotal] = useState(0);
-  const [time, setTime] = useState(new Date());
-  const everyRender = () => {
-    console.log("This will be displayed on every render");
-  };
-  everyRender();
 
   useEffect(() => {
-    const firstRenderOnly = () => {
-      console.log("this will be displayed on the first render only");
-      setTotal(1000);
+    const fetchData = async () => {
+      try {
+        const result = await axios.get("http://localhost:4000/ad");
+        console.log(result);
+      } catch (err) {
+        console.log("error", err);
+      }
     };
-    firstRenderOnly();
-  }, [time]);
+    fetchData();
+  }, []);
 
   const ads: AdCardProps[] = [
     {
@@ -59,14 +59,6 @@ const RecentAds = () => {
     <>
       <h2>Annonces récentes</h2>
       <p>Total : {total} €</p>
-      <p>Last Update {time.toTimeString()}</p>
-      <button
-        onClick={() => {
-          setTime(new Date());
-        }}
-      >
-        Update time
-      </button>
       <section className="recent-ads">
         {ads.map((ad) => (
           <div key={ad.title}>
