@@ -1,8 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdCard, { AdCardProps } from "./AdCard";
 
 const RecentAds = () => {
   const [total, setTotal] = useState(0);
+  const [time, setTime] = useState(new Date());
+  const everyRender = () => {
+    console.log("This will be displayed on every render");
+  };
+  everyRender();
+
+  useEffect(() => {
+    const firstRenderOnly = () => {
+      console.log("this will be displayed on the first render only");
+      setTotal(1000);
+    };
+    firstRenderOnly();
+  }, [time]);
+
   const ads: AdCardProps[] = [
     {
       title: "Table",
@@ -45,6 +59,14 @@ const RecentAds = () => {
     <>
       <h2>Annonces récentes</h2>
       <p>Total : {total} €</p>
+      <p>Last Update {time.toTimeString()}</p>
+      <button
+        onClick={() => {
+          setTime(new Date());
+        }}
+      >
+        Update time
+      </button>
       <section className="recent-ads">
         {ads.map((ad) => (
           <div key={ad.title}>
