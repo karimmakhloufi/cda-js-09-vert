@@ -7,10 +7,7 @@ export default function Home() {
   return (
     <>
       <body>
-        <main className="main-content">
-          <Header />
-          <RecentAds />
-        </main>
+        <RecentAds />
       </body>
     </>
   );
