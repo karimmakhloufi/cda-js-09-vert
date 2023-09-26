@@ -28,7 +28,7 @@ export class Ad extends BaseEntity {
   owner: string;
 
   @Column()
-  picture: string;
+  imageUrl: string;
 
   @Column()
   location: string;
