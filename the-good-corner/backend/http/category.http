@@ -1,10 +1,10 @@
-GET http://localhost:3000/category
+GET http://localhost:4000/category
 
 ###
 
-POST http://localhost:3000/category
+POST http://localhost:4000/category
 Content-Type: application/json
 
 {
-    "name": "IT"
+    "name": "Photographie"
 }
