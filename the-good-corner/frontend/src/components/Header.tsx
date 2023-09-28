@@ -2,8 +2,10 @@ import axios from "axios";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Category } from "@/types/category";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -28,8 +30,24 @@ const Header = () => {
             <span className="desktop-long-label">THE GOOD CORNER</span>
           </Link>
         </h1>
-        <form className="text-field-with-button">
-          <input className="text-field main-search-field" type="search" />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form as HTMLFormElement);
+
+            // Or you can work with it as a plain object:
+            const formJson = Object.fromEntries(formData.entries());
+            console.log(formJson);
+            router.push(`/ad/search/${formJson.keyword}`);
+          }}
+          className="text-field-with-button"
+        >
+          <input
+            name="keyword"
+            className="text-field main-search-field"
+            type="search"
+          />
           <button className="button button-primary">
             <svg
               aria-hidden="true"
@@ -52,16 +70,14 @@ const Header = () => {
         </Link>
       </div>
       <nav className="categories-navigation">
-        {categories.map((category, index) => (
-          <>
-            <Link
-              key={category.id}
-              className="category-navigation-link"
-              href={`/ads?${category.name}`}
-            >
-              {category.name}
-            </Link>
-          </>
+        {categories.map((category) => (
+          <Link
+            key={category.id}
+            className="category-navigation-link"
+            href={`/ads?${category.name}`}
+          >
+            {category.name}
+          </Link>
         ))}
       </nav>
     </header>

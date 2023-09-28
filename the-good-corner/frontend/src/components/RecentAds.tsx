@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import AdCard, { AdCardProps } from "./AdCard";
+import { AdCardProps } from "./AdCard";
+import DisplayAds from "./DisplayAds";
 
 const RecentAds = () => {
-  const [total, setTotal] = useState(0);
   const [recentAds, setRecentAds] = useState<AdCardProps[]>([]);
 
   useEffect(() => {
@@ -21,32 +21,7 @@ const RecentAds = () => {
     fetchData();
   }, []);
 
-  return (
-    <>
-      <h2>Annonces récentes</h2>
-      <p>Total : {total} €</p>
-      <section className="recent-ads">
-        {recentAds.map((ad) => (
-          <div key={ad.id}>
-            <AdCard
-              imageUrl={ad.imageUrl}
-              link={ad.link}
-              title={ad.title}
-              price={ad.price}
-            />
-            <button
-              onClick={() => {
-                setTotal(total + ad.price);
-              }}
-              className="button"
-            >
-              Add to total
-            </button>
-          </div>
-        ))}
-      </section>
-    </>
-  );
+  return <DisplayAds ads={recentAds} title="Recent Ads" />;
 };
 
 export default RecentAds;
