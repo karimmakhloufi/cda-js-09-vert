@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-
-type category = {
-  id: number;
-  name: string;
-};
+import { Category } from "@/types/category";
 
 type Inputs = {
   title: string;
@@ -24,12 +20,12 @@ const NewAd = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const [categories, setCategories] = useState<category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const result = await axios.get<category[]>(
+        const result = await axios.get<Category[]>(
           "http://localhost:4000/category"
         );
         setCategories(result.data);

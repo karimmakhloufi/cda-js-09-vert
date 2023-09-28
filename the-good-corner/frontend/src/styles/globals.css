@@ -37,12 +37,12 @@ h1 {
   color: #666;
   padding: 16px 10px 6px;
   white-space: nowrap;
-  overflow-x: scroll;
 }
 
 .category-navigation-link {
   text-decoration: unset;
   color: inherit;
+  margin-right: 10px;
 }
 
 .button {
@@ -140,7 +140,6 @@ h1 {
   .categories-navigation {
     padding-top: 14px;
     display: flex;
-    justify-content: space-between;
   }
 
   .ad-details-image-container {

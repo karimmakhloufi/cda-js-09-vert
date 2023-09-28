@@ -1,6 +1,24 @@
+import axios from "axios";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Category } from "@/types/category";
 
 const Header = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const result = await axios.get<Category[]>(
+          "http://localhost:4000/category"
+        );
+        setCategories(result.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCategories();
+  }, []);
   return (
     <header className="header">
       <div className="main-menu">
@@ -34,57 +52,17 @@ const Header = () => {
         </Link>
       </div>
       <nav className="categories-navigation">
-        <a href="" className="category-navigation-link">
-          Ameublement
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Électroménager
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Photographie
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Informatique
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Téléphonie{" "}
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Vélos
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Véhicules
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Sport
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Habillement
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Bébé
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Outillage
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Services{" "}
-        </a>{" "}
-        •
-        <a href="" className="category-navigation-link">
-          Vacances
-        </a>
+        {categories.map((category, index) => (
+          <>
+            <Link
+              key={category.id}
+              className="category-navigation-link"
+              href={`/ads?${category.name}`}
+            >
+              {category.name}
+            </Link>
+          </>
+        ))}
       </nav>
     </header>
   );
