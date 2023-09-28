@@ -36,12 +36,12 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:3000/ad
+PUT http://localhost:4000/ad
 Content-Type: application/json
 
 {
   "idToEdit": 4,
   "newAd": {
-    "location": "Reims"
+    "category": 2
   } 
 }

@@ -40,12 +40,13 @@ const EditAd = () => {
           `http://localhost:4000/ad/${router.query.id}`
         );
         setAd(result.data);
-        reset();
       } catch (err) {
         console.log(err);
       }
     };
-    fetchAd();
+    if (router.query.id) {
+      fetchAd();
+    }
   }, [router.query.id, reset]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -77,6 +78,10 @@ const EditAd = () => {
       });
     }
   };
+
+  if (ad === undefined) {
+    return "loading";
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -134,9 +139,13 @@ const EditAd = () => {
         />
       </label>
       <br />
-      <select defaultValue={ad?.category?.id} {...register("category")}>
+      <select defaultValue={ad?.category.id} {...register("category")}>
         {categories.map((category) => (
-          <option key={category.id} value={category.id}>
+          <option
+            // selected={category.id == ad?.category?.id}
+            key={category.id}
+            value={category.id}
+          >
             {category.name}
           </option>
         ))}

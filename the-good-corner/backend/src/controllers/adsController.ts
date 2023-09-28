@@ -73,8 +73,14 @@ const adsController = {
   },
   put: async (req: Request, res: Response) => {
     try {
-      const oldAd = await Ad.findOneByOrFail({ id: req.body.idToEdit });
-      Ad.save({ ...oldAd, ...req.body.newAd });
+      const result = await Ad.find({
+        where: {
+          id: Number.parseInt(req.body.idToEdit),
+        },
+        relations: { category: true },
+      });
+      console.log("result", result);
+      Ad.update({ id: req.body.idToEdit }, req.body.newAd);
       res.send("The ad has been updated");
     } catch (err) {
       console.log(err);
