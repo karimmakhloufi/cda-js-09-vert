@@ -1,8 +1,12 @@
+GET http://localhost:4000/ad
+
+###
+
 GET http://localhost:4000/ad?title=bike
 
 ###
 
-GET http://localhost:4000/ad/123
+GET http://localhost:4000/ad/1
 
 ###
 

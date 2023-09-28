@@ -6,9 +6,23 @@ export type AdCardProps = {
   imageUrl: string;
   title: string;
   price: number;
+  description: string;
+  owner: string;
+  location: string;
+  category: {
+    id: number;
+    name: string;
+  };
 };
 
-const AdCard = ({ link, imageUrl, title, price }: AdCardProps) => {
+const AdCard = ({
+  link,
+  imageUrl,
+  title,
+  price,
+  description,
+  owner,
+}: AdCardProps) => {
   return (
     <div className={styles.container}>
       <a className={styles.link} href={link}>
