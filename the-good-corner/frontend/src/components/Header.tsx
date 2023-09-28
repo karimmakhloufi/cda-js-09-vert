@@ -28,10 +28,10 @@ const Header = () => {
             </svg>
           </button>
         </form>
-        <a href="/post-ad" className="button link-button">
+        <Link href="/ad/new" className="button link-button">
           <span className="mobile-short-label">Publier</span>
           <span className="desktop-long-label">Publier une annonce</span>
-        </a>
+        </Link>
       </div>
       <nav className="categories-navigation">
         <a href="" className="category-navigation-link">
