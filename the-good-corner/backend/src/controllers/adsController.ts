@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { Ad } from "../entities/ad";
-// import { Tag } from "../entities/tag";
 
 const adsController = {
   read: async (_req: Request, res: Response) => {
@@ -14,6 +13,17 @@ const adsController = {
       res.send(result);
     } catch (err) {
       res.send("There has been an error while reading the ads");
+    }
+  },
+  readOne: async (req: Request, res: Response) => {
+    try {
+      const result = await Ad.findOneByOrFail({
+        id: Number.parseInt(req.params.id),
+      });
+      res.send(result);
+    } catch (err) {
+      console.log("error", err);
+      res.send("an error occured while reading one ad");
     }
   },
   create: async (req: Request, res: Response) => {

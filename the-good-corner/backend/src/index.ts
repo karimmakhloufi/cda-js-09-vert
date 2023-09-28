@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/ad", adsController.read);
+app.get("/ad/:id", adsController.readOne);
 app.post("/ad", adsController.create);
 app.delete("/ad", adsController.delete);
 app.put("/ad", adsController.put);
