@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Ad } from "../entities/ad";
+import { validate } from "class-validator";
 
 const adsController = {
   read: async (_req: Request, res: Response) => {
@@ -28,17 +29,16 @@ const adsController = {
   },
   create: async (req: Request, res: Response) => {
     try {
-      /*
       const newAd = Ad.create(req.body);
-      const tagsToAssociate = await Tag.find(req.body.tags);
-      newAd.tags = tagsToAssociate;
-
-      await newAd.save();
-      */
-      await Ad.save(req.body);
+      const errors = await validate(newAd);
+      if (errors.length > 0) {
+        throw new Error(`Validation failed!`);
+      } else {
+        await newAd.save();
+      }
       res.send("Ad has been created");
     } catch (err) {
-      res.send("An error occured while creating the ad");
+      res.status(400).send("An error occured while creating the ad");
     }
   },
   delete: async (req: Request, res: Response) => {

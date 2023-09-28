@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Category } from "@/types/category";
+import { toast } from "react-toastify";
 
 type Inputs = {
   title: string;
@@ -36,8 +37,33 @@ const NewAd = () => {
     fetchCategories();
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) =>
-    axios.post("http://localhost:4000/ad", data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const result = await axios.post("http://localhost:4000/ad", data);
+      console.log("result", result);
+      toast.success(result.data, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    } catch (err: any) {
+      toast.error(err.response.data, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

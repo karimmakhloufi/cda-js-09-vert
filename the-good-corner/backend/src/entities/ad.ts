@@ -7,6 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Length } from "class-validator";
 import { Category } from "./category";
 import { Tag } from "./tag";
 
@@ -16,6 +17,7 @@ export class Ad extends BaseEntity {
   id: number;
 
   @Column()
+  @Length(3)
   title: string;
 
   @Column()
