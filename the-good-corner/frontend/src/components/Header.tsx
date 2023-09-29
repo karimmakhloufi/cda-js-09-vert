@@ -74,7 +74,7 @@ const Header = () => {
           <Link
             key={category.id}
             className="category-navigation-link"
-            href={`/ads?${category.name}`}
+            href={`/ad/filter/${category.name}`}
           >
             {category.name}
           </Link>

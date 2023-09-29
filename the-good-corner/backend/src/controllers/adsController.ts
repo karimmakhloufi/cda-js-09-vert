@@ -16,6 +16,14 @@ const adsController = {
             tags: true,
           },
         });
+      } else if (req.query.category !== undefined) {
+        result = await Ad.find({
+          where: { category: { name: Like(`%${req.query.category}%`) } },
+          relations: {
+            category: true,
+            tags: true,
+          },
+        });
       } else {
         console.log("no title in query");
         result = await Ad.find({
