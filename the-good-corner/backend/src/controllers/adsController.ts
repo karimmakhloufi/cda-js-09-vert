@@ -71,7 +71,9 @@ const adsController = {
   },
   delete: async (req: Request, res: Response) => {
     try {
-      const adToDelete = await Ad.findOneByOrFail({ id: req.body.id });
+      const adToDelete = await Ad.findOneByOrFail({
+        id: Number.parseInt(req.params.id),
+      });
       adToDelete.remove();
       res.send("The ad has been deleted");
     } catch (err) {
