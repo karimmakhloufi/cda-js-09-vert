@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AdCard, { AdCardProps } from "./AdCard";
 
 type DisplayAdsType = {
@@ -11,14 +12,18 @@ const DisplayAds = ({ ads, title }: DisplayAdsType) => {
       <h2>{title}</h2>
       <section className="recent-ads">
         {ads.map((ad) => (
-          <div key={ad.id}>
+          <Link href={`/ad/${ad.id}`} key={ad.id}>
             <AdCard
               imageUrl={ad.imageUrl}
               link={ad.link}
               title={ad.title}
               price={ad.price}
+              category={ad.category}
+              description={ad.description}
+              location={ad.location}
+              owner={ad.owner}
             />
-          </div>
+          </Link>
         ))}
       </section>
     </>
