@@ -1,32 +1,25 @@
 import "reflect-metadata";
-import express, { Express } from "express";
-import cors from "cors";
+import { buildSchema } from "type-graphql";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 import dataSource from "../config/db";
-import adsController from "./controllers/adsController";
-import categoryController from "./controllers/categoryController";
-import tagController from "./controllers/tagController";
+import { CategoryResolver } from "./resolvers/Category";
 
-const app: Express = express();
-const port: number = 4000;
-
-app.use(cors());
-app.use(express.json());
-
-app.get("/ad", adsController.read);
-app.get("/ad/:id", adsController.readOne);
-app.post("/ad", adsController.create);
-app.delete("/ad/:id", adsController.delete);
-app.put("/ad", adsController.put);
-
-app.get("/category", categoryController.read);
-app.post("/category", categoryController.create);
-app.put("/category", categoryController.edit);
-app.delete("/category", categoryController.delete);
-
-app.get("/tag", tagController.read);
-app.post("/tag", tagController.create);
-
-app.listen(port, async () => {
+const start = async () => {
   await dataSource.initialize();
-  console.log(`Example app listening on port ${port}`);
-});
+  const schema = await buildSchema({
+    resolvers: [CategoryResolver],
+  });
+
+  const server = new ApolloServer({
+    schema,
+  });
+
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+  });
+
+  console.log(`🚀  Server ready at: ${url}`);
+};
+
+start();
