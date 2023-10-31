@@ -17,5 +17,9 @@
     "sqlite3": "^5.1.6",
     "ts-node-dev": "^2.0.0",
     "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.15",
+    "@types/express": "^4.17.20"
   }
 }
