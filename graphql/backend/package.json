@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.9.5",
+    "class-validator": "^0.14.0",
     "graphql": "^16.8.1",
-    "ts-node-dev": "^2.0.0"
+    "graphql-scalars": "^1.22.4",
+    "reflect-metadata": "^0.1.13",
+    "ts-node-dev": "^2.0.0",
+    "type-graphql": "^2.0.0-beta.3"
   }
 }
