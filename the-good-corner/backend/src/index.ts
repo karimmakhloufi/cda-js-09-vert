@@ -4,11 +4,12 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import dataSource from "../config/db";
 import { CategoryResolver } from "./resolvers/Category";
+import { AdResolver } from "./resolvers/Ad";
 
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [CategoryResolver],
+    resolvers: [CategoryResolver, AdResolver],
   });
 
   const server = new ApolloServer({
