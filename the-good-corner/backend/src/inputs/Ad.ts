@@ -22,4 +22,7 @@ export class AdInput {
 
   @Field()
   category: number;
+
+  @Field(() => [Number])
+  tags: [number];
 }
