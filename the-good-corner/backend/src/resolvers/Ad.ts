@@ -1,6 +1,7 @@
 import { Like } from "typeorm";
 import { Ad } from "../entities/ad";
-import { Arg, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { AdInput } from "../inputs/Ad";
 
 @Resolver()
 export class AdResolver {
@@ -16,5 +17,10 @@ export class AdResolver {
     } else {
       return await Ad.find({ relations: { category: true } });
     }
+  }
+
+  @Mutation(() => Ad)
+  async createNewAd(@Arg("adData") adData: AdInput) {
+    return await Ad.save({ ...adData, category: { id: adData.category } });
   }
 }
