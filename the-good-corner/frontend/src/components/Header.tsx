@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_CATEGORIES } from "../graphql/queries/queries";
+import { GET_ALL_CATEGORIES } from "@/graphql/queries/queries";
 
 const Header = () => {
-  const { loading, error, data } = useQuery<{
-    allCategories: {
-      id: number;
-      name: string;
-    }[];
-  }>(GET_ALL_CATEGORIES);
+  const { loading, error, data } = useQuery(GET_ALL_CATEGORIES);
   const router = useRouter();
 
   if (loading) return <p>Loading...</p>;
