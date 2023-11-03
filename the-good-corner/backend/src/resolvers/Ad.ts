@@ -22,11 +22,20 @@ export class AdResolver {
 
   @Mutation(() => Ad)
   async createNewAd(@Arg("adData") adData: AdInput) {
-    return await Ad.save({
-      ...adData,
-      category: { id: adData.category },
-      tags: adData.tags.map((el) => ({ id: el })),
-    });
+    if (adData.tags) {
+      return await Ad.save({
+        ...adData,
+        category: { id: adData.category },
+        tags: adData.tags.map((el) => ({ id: el })),
+      });
+    } else {
+      // TODO make tags optionnal in creation
+      return await Ad.save({
+        ...adData,
+        category: { id: adData.category },
+        tags: [],
+      });
+    }
   }
 
   @Mutation(() => Ad)

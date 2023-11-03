@@ -3,10 +3,13 @@ import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Category } from "@/types/category";
 import { toast } from "react-toastify";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_ALL_CATEGORIES } from "../../graphql/queries/queries";
+import { CREATE_NEW_AD } from "../../graphql/mutations/mutations";
 
 type Inputs = {
   title: string;
-  price: number;
+  price: string;
   description: string;
   owner: string;
   imageUrl: string;
@@ -21,25 +24,36 @@ const NewAd = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const [categories, setCategories] = useState<Category[]>([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const result = await axios.get<Category[]>(
-          "http://localhost:4000/category"
-        );
-        setCategories(result.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const { loading, error, data } = useQuery<{
+    allCategories: {
+      id: number;
+      name: string;
+    }[];
+  }>(GET_ALL_CATEGORIES);
+
+  const [
+    createNewAd,
+    { data: createAdData, loading: createAdLoading, error: createAdError },
+  ] = useMutation(CREATE_NEW_AD);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const result = await axios.post("http://localhost:4000/ad", data);
+      // const result = await axios.post("http://localhost:4000/ad", data);
+      console.log("data from form", data);
+      const result = await createNewAd({
+        variables: {
+          adData: {
+            title: data.title,
+            description: data.description,
+            imageUrl: data.imageUrl,
+            location: data.location,
+            price: Number.parseInt(data.price),
+            owner: data.owner,
+            category: Number.parseInt(data.category),
+          },
+        },
+      });
       console.log("result", result);
       toast.success(result.data, {
         position: "top-right",
@@ -98,7 +112,7 @@ const NewAd = () => {
       </label>
       <br />
       <select {...register("category")}>
-        {categories.map((category) => (
+        {data?.allCategories.map((category) => (
           <option key={category.id} value={category.id}>
             {category.name}
           </option>
