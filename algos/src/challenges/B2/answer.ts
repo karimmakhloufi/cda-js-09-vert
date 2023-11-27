@@ -9,15 +9,29 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/* 
 export default function ({
   messages,
 }: {
   messages: MessageWithImages[];
 }): string[] {
-  return []
+  const images: string[] = [];
+  messages
+    .sort((a, b) => {
+      if (a.sentAt === b.sentAt) {
+        return a.content.length - b.content.length;
+      } else {
+        return a.sentAt.localeCompare(b.sentAt);
+      }
+    })
+    .forEach((message) => {
+      message.images.forEach((image) => {
+        if (!images.includes(image)) {
+          images.push(image);
+        }
+      });
+    });
+  return images;
 }
- */
 
 // used interfaces, do not touch
 export interface MessageWithImages {
