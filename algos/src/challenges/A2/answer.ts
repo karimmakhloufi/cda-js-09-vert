@@ -9,15 +9,23 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
 export default function ({
   categories,
 }: {
   categories: Category[];
 }): CategoryWithTags[] {
-  return [];
+  return categories.map((category) => {
+    const newTags: string[] = [];
+    category.ads.forEach((ad) => {
+      ad.tags.forEach((tag) => {
+        if (!newTags.includes(tag)) {
+          newTags.push(tag);
+        }
+      });
+    });
+    return { ...category, tags: newTags.sort() };
+  });
 }
-*/
 
 // used interfaces, do not touch
 interface Ad {
