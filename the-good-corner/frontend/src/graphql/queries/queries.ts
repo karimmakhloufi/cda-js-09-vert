@@ -1,10 +1,10 @@
-import { graphql } from "../../gql/";
+import { gql } from "@apollo/client";
 
-export const GET_ALL_CATEGORIES = graphql(/* GraphQL */ `
-  query GetAllCategories {
+export const GET_ALL_CATEGORIES = gql`
+  query AllCategories {
     allCategories {
       id
       name
     }
   }
-`);
+`;
