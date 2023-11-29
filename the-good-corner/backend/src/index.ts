@@ -12,6 +12,8 @@ const start = async () => {
     resolvers: [CategoryResolver, AdResolver],
   });
 
+  console.log("hello");
+
   const server = new ApolloServer({
     schema,
   });
