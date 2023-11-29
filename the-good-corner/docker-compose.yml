@@ -11,3 +11,8 @@ services:
       - 3000:3000
     volumes:
       - ./frontend/src:/app/src
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example

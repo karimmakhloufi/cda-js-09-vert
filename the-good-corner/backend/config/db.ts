@@ -1,8 +1,12 @@
 import { DataSource } from "typeorm";
 
 const dataSource = new DataSource({
-  type: "sqlite",
-  database: "./good_corner.sqlite",
+  type: "postgres",
+  host: "db",
+  port: 5432,
+  username: "postgres",
+  password: "example",
+  database: "postgres",
   entities: ["src/entities/*.ts"],
   synchronize: true,
   logging: ["query", "error"],
