@@ -32,6 +32,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   imagesupload:
     build: ./imagesupload
     volumes:
@@ -39,3 +41,5 @@ services:
       - ./imagesupload/uploads:/app/uploads
     ports:
       - 8000:8000
+volumes:
+  pgdata:
