@@ -89,32 +89,21 @@ const NewAd = () => {
     <div>
       <input
         type="file"
-        onChange={(e) => {
+        onChange={async (e) => {
           if (e.target.files) {
             setFile(e.target.files[0]);
-          }
-        }}
-      />
-      <button
-        onClick={async (event) => {
-          event.preventDefault();
-          if (file) {
             const url = "http://localhost:8000/upload";
             const formData = new FormData();
-            formData.append("file", file, file.name);
+            formData.append("file", e.target.files[0], e.target.files[0].name);
             try {
               const response = await axios.post(url, formData);
               setImageURL(response.data.filename);
             } catch (err) {
               console.log("error", err);
             }
-          } else {
-            alert("select a file to upload");
           }
         }}
-      >
-        Upload Image
-      </button>
+      />
       {imageURL ? (
         <>
           <br />
