@@ -6,6 +6,7 @@ import dataSource from "../config/db";
 import { CategoryResolver } from "./resolvers/Category";
 import { AdResolver } from "./resolvers/Ad";
 import { Category } from "./entities/category";
+import { UserResolver } from "./resolvers/User";
 
 const start = async () => {
   await dataSource.initialize();
@@ -16,7 +17,7 @@ const start = async () => {
     await Category.save({ name: "miscellaneous" });
   }
   const schema = await buildSchema({
-    resolvers: [CategoryResolver, AdResolver],
+    resolvers: [CategoryResolver, AdResolver, UserResolver],
   });
 
   const server = new ApolloServer({
