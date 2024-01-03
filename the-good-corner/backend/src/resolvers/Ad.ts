@@ -1,11 +1,12 @@
 import { Like } from "typeorm";
 import { Ad } from "../entities/ad";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
 import { AdInput } from "../inputs/Ad";
 import { AdUpdateInput } from "../inputs/AdUpdate";
 
 @Resolver()
 export class AdResolver {
+  @Authorized()
   @Query(() => [Ad])
   async getAllAds(@Arg("category", { nullable: true }) category?: string) {
     if (category) {

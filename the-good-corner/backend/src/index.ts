@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { ApolloServer } from "@apollo/server";
+import * as jwt from "jsonwebtoken";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import dataSource from "../config/db";
 import { CategoryResolver } from "./resolvers/Category";
@@ -18,6 +19,13 @@ const start = async () => {
   }
   const schema = await buildSchema({
     resolvers: [CategoryResolver, AdResolver, UserResolver],
+    authChecker: ({ context }) => {
+      if (context.email) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   });
 
   const server = new ApolloServer({
@@ -26,6 +34,17 @@ const start = async () => {
 
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
+    context: async ({ req }) => {
+      // console.log("headers", req.headers.authorization);
+      const token = req.headers.authorization?.split("Bearer ")[1];
+      // console.log(token);
+      if (token) {
+        const payload = jwt.verify(token, "mysupersecretkey");
+        console.log("payload", payload);
+        return payload;
+      }
+      return {};
+    },
   });
 
   console.log(`🚀  Server ready at: ${url}`);

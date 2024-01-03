@@ -1,5 +1,6 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 import * as argon2 from "argon2";
+import * as jwt from "jsonwebtoken";
 import { User } from "../entities/user";
 
 @InputType({ description: "New recipe data" })
@@ -42,7 +43,8 @@ export class UserResolver {
       ) {
         throw new Error("invalid password");
       } else {
-        return "correct credentials";
+        const token = jwt.sign({ email: user.email }, "mysupersecretkey");
+        return token;
       }
     } catch (err) {
       console.log("err", err);
