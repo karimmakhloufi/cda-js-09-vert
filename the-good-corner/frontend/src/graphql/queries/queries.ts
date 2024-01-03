@@ -8,3 +8,9 @@ export const GET_ALL_CATEGORIES = gql`
     }
   }
 `;
+
+export const LOGIN = gql`
+  query Query($userData: UserInput!) {
+    login(UserData: $userData)
+  }
+`;

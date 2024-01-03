@@ -6,7 +6,6 @@ import { AdUpdateInput } from "../inputs/AdUpdate";
 
 @Resolver()
 export class AdResolver {
-  @Authorized()
   @Query(() => [Ad])
   async getAllAds(@Arg("category", { nullable: true }) category?: string) {
     if (category) {
@@ -21,6 +20,7 @@ export class AdResolver {
     }
   }
 
+  @Authorized()
   @Mutation(() => Ad)
   async createNewAd(@Arg("adData") adData: AdInput) {
     if (adData.tags) {
