@@ -12,9 +12,6 @@ export class AdInput {
   description: string;
 
   @Field()
-  owner: string;
-
-  @Field()
   imageUrl: string;
 
   @Field()

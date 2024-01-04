@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Category } from "@/types/category";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ALL_CATEGORIES } from "../../graphql/queries/queries";
@@ -18,6 +18,11 @@ type Inputs = {
 };
 
 const NewAd = () => {
+  const router = useRouter();
+  if (localStorage.getItem("jwt") === null) {
+    console.log("redirect to login page");
+    router.push("/login");
+  }
   const [file, setFile] = useState<File>();
   const [imageURL, setImageURL] = useState<String>();
 
@@ -63,7 +68,6 @@ const NewAd = () => {
               imageUrl: "http://localhost:8000" + imageURL,
               location: data.location,
               price: Number.parseInt(data.price),
-              owner: data.owner,
               category: Number.parseInt(data.category),
             },
           },
@@ -147,11 +151,6 @@ const NewAd = () => {
           <label>
             Description: <br />
             <input className="text-field" {...register("description")} />
-          </label>
-          <br />
-          <label>
-            Nom du vendeur: <br />
-            <input className="text-field" {...register("owner")} />
           </label>
           <br />
           <label>

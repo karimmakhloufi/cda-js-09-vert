@@ -12,9 +12,6 @@ export class AdUpdateInput {
   description?: string;
 
   @Field({ nullable: true })
-  owner?: string;
-
-  @Field({ nullable: true })
   imageUrl?: string;
 
   @Field({ nullable: true })
