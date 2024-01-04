@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
+import { useContext } from "react";
 import { GET_ALL_CATEGORIES } from "../graphql/queries/queries";
+import { AuthContext } from "../pages/_app";
 
 const Header = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+  console.log("isLoggedIn", isLoggedIn);
   const { loading, error, data } = useQuery<{
     allCategories: {
       id: number;
@@ -58,10 +62,16 @@ const Header = () => {
               </svg>
             </button>
           </form>
-          <Link href="/ad/new" className="button link-button">
-            <span className="mobile-short-label">Publier</span>
-            <span className="desktop-long-label">Publier une annonce</span>
-          </Link>
+          <>
+            {isLoggedIn ? (
+              <Link href="/ad/new" className="button link-button">
+                <span className="mobile-short-label">Publier</span>
+                <span className="desktop-long-label">Publier une annonce</span>
+              </Link>
+            ) : (
+              <p>Login</p>
+            )}
+          </>
         </div>
         <nav className="categories-navigation">
           {data.allCategories.map((el) => (
