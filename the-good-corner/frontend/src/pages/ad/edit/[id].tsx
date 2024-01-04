@@ -113,15 +113,6 @@ const EditAd = () => {
       </label>
       <br />
       <label>
-        Nom du vendeur: <br />
-        <input
-          defaultValue={ad?.owner}
-          className="text-field"
-          {...register("owner")}
-        />
-      </label>
-      <br />
-      <label>
         Url de l&apos;image: <br />
         <input
           className="text-field"

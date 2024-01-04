@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+export type UserRoleType = "admin" | "user";
 
 @ObjectType()
 @Entity()
@@ -14,4 +15,11 @@ export class User extends BaseEntity {
 
   @Column()
   hashedPassword: string;
+
+  @Column({
+    type: "enum",
+    enum: ["admin", "user"],
+    default: "user",
+  })
+  role: UserRoleType;
 }

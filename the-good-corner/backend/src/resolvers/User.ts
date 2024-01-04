@@ -1,7 +1,15 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Authorized,
+  Field,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+} from "type-graphql";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
-import { User } from "../entities/user";
+import { User, UserRoleType } from "../entities/user";
 
 @InputType({ description: "New recipe data" })
 class UserInput implements Partial<User> {
@@ -36,6 +44,7 @@ export class UserResolver {
 
   @Query(() => String)
   async login(@Arg("UserData") UserData: UserInput) {
+    let payload: { email: string; role: UserRoleType };
     try {
       const user = await User.findOneByOrFail({ email: UserData.email });
       if (
@@ -43,12 +52,19 @@ export class UserResolver {
       ) {
         throw new Error("invalid password");
       } else {
-        const token = jwt.sign({ email: user.email }, "mysupersecretkey");
+        payload = { email: user.email, role: user.role };
+        const token = jwt.sign(payload, "mysupersecretkey");
         return token;
       }
     } catch (err) {
       console.log("err", err);
       return "invalid credentials";
     }
+  }
+
+  @Authorized("admin")
+  @Query(() => String)
+  async adminQuery() {
+    return "you are admin";
   }
 }

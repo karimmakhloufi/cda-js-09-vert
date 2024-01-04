@@ -6,7 +6,7 @@ import { GET_ALL_CATEGORIES } from "../graphql/queries/queries";
 import { AuthContext } from "../pages/_app";
 
 const Header = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   console.log("isLoggedIn", isLoggedIn);
   const { loading, error, data } = useQuery<{
     allCategories: {
@@ -64,12 +64,28 @@ const Header = () => {
           </form>
           <>
             {isLoggedIn ? (
-              <Link href="/ad/new" className="button link-button">
-                <span className="mobile-short-label">Publier</span>
-                <span className="desktop-long-label">Publier une annonce</span>
-              </Link>
+              <>
+                <Link href="/ad/new" className="button link-button">
+                  <span className="mobile-short-label">Publier</span>
+                  <span className="desktop-long-label">
+                    Publier une annonce
+                  </span>
+                </Link>
+                <button
+                  className="button button-primary"
+                  onClick={() => {
+                    localStorage.removeItem("jwt");
+                    setIsLoggedIn(false);
+                  }}
+                >
+                  Logout
+                </button>
+              </>
             ) : (
-              <p>Login</p>
+              <Link href="/login" className="button link-button">
+                <span className="mobile-short-label">Login</span>
+                <span className="desktop-long-label">Login</span>
+              </Link>
             )}
           </>
         </div>

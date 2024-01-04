@@ -24,7 +24,7 @@ export class AdResolver {
   @Mutation(() => Ad)
   async createNewAd(
     @Arg("adData") adData: AdInput,
-    @Ctx() ctx: { email: string }
+    @Ctx() ctx: { email: string; role: string }
   ) {
     console.log("context", ctx);
     if (adData.tags) {
@@ -44,8 +44,17 @@ export class AdResolver {
     }
   }
 
+  @Authorized()
   @Mutation(() => Ad)
-  async updateAd(@Arg("id") id: number, @Arg("adData") adData: AdUpdateInput) {
+  async updateAd(
+    @Arg("id") id: number,
+    @Arg("adData") adData: AdUpdateInput,
+    @Ctx() ctx: { email: string; role: string }
+  ) {
+    const adToUpdate = await Ad.findOneByOrFail({ id: id });
+    if (adToUpdate.owner !== ctx.email && ctx.role !== "admin") {
+      throw new Error("You cannot edit this ad");
+    }
     // TODO Remove any
     const newAdData: any = { ...adData };
     if (adData.category) {
