@@ -21,8 +21,6 @@ class UserInfo {
   email: string;
   @Field({ nullable: true })
   role: string;
-  @Field({ nullable: true })
-  jwt: string;
 }
 
 @InputType({ description: "New recipe data" })
