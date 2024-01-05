@@ -11,17 +11,6 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
-
-const initialContext: {
-  isLoggedIn: boolean;
-  setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
-} = {
-  isLoggedIn: false,
-  setIsLoggedIn: () => {},
-};
-
-export const AuthContext = createContext(initialContext);
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
@@ -45,19 +34,13 @@ const client = new ApolloClient({
 });
 
 function App({ Component, pageProps }: AppProps) {
-  console.log("localstorage jwt", localStorage.getItem("jwt"));
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("jwt") !== null
-  );
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      <ApolloProvider client={client}>
-        <ToastContainer />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ApolloProvider>
-    </AuthContext.Provider>
+    <ApolloProvider client={client}>
+      <ToastContainer />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ApolloProvider>
   );
 }
 

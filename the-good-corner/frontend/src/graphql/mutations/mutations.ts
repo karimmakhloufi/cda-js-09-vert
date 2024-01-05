@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_NEW_AD = gql`
-  mutation Mutation($adData: AdInput!) {
+  mutation CreateNewAd($adData: AdInput!) {
     createNewAd(adData: $adData) {
       id
     }
@@ -9,7 +9,15 @@ export const CREATE_NEW_AD = gql`
 `;
 
 export const REGISTER = gql`
-  mutation Mutation($newUserData: UserInput!) {
+  mutation Register($newUserData: UserInput!) {
     register(newUserData: $newUserData)
+  }
+`;
+
+export const LOGIN = gql`
+  mutation Mutation($userData: UserInput!) {
+    login(UserData: $userData) {
+      jwt
+    }
   }
 `;

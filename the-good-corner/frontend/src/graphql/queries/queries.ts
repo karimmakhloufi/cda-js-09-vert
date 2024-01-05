@@ -9,8 +9,12 @@ export const GET_ALL_CATEGORIES = gql`
   }
 `;
 
-export const LOGIN = gql`
-  query Query($userData: UserInput!) {
-    login(UserData: $userData)
+export const GET_AUTH_INFO = gql`
+  query WhoAmI {
+    whoAmI {
+      isLoggedIn
+      email
+      role
+    }
   }
 `;

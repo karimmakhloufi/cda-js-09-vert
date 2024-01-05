@@ -2,12 +2,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
 import { useContext } from "react";
-import { GET_ALL_CATEGORIES } from "../graphql/queries/queries";
-import { AuthContext } from "../pages/_app";
+import { UserContext } from "./Layout";
+import { GET_ALL_CATEGORIES, GET_AUTH_INFO } from "../graphql/queries/queries";
 
 const Header = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  console.log("isLoggedIn", isLoggedIn);
+  const { data: logindata } = useQuery<{
+    whoAmI: { isLoggedIn: boolean };
+  }>(GET_AUTH_INFO);
+  console.log("logindata", logindata);
+  const authInfo = useContext(UserContext);
   const { loading, error, data } = useQuery<{
     allCategories: {
       id: number;
@@ -63,7 +66,7 @@ const Header = () => {
             </button>
           </form>
           <>
-            {isLoggedIn ? (
+            {authInfo.isLoggedIn ? (
               <>
                 <Link href="/ad/new" className="button link-button">
                   <span className="mobile-short-label">Publier</span>
@@ -75,7 +78,7 @@ const Header = () => {
                   className="button button-primary"
                   onClick={() => {
                     localStorage.removeItem("jwt");
-                    setIsLoggedIn(false);
+                    // refetchQueries
                   }}
                 >
                   Logout

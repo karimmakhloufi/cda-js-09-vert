@@ -4,12 +4,26 @@ import {
   Field,
   InputType,
   Mutation,
+  ObjectType,
   Query,
   Resolver,
+  Ctx,
 } from "type-graphql";
 import * as argon2 from "argon2";
 import * as jwt from "jsonwebtoken";
 import { User, UserRoleType } from "../entities/user";
+
+@ObjectType()
+class UserInfo {
+  @Field()
+  isLoggedIn: boolean;
+  @Field({ nullable: true })
+  email: string;
+  @Field({ nullable: true })
+  role: string;
+  @Field({ nullable: true })
+  jwt: string;
+}
 
 @InputType({ description: "New recipe data" })
 class UserInput implements Partial<User> {
@@ -42,23 +56,18 @@ export class UserResolver {
     }
   }
 
-  @Query(() => String)
+  @Mutation(() => UserInfo)
   async login(@Arg("UserData") UserData: UserInput) {
     let payload: { email: string; role: UserRoleType };
-    try {
-      const user = await User.findOneByOrFail({ email: UserData.email });
-      if (
-        (await argon2.verify(user.hashedPassword, UserData.password)) === false
-      ) {
-        throw new Error("invalid password");
-      } else {
-        payload = { email: user.email, role: user.role };
-        const token = jwt.sign(payload, "mysupersecretkey");
-        return token;
-      }
-    } catch (err) {
-      console.log("err", err);
-      return "invalid credentials";
+    const user = await User.findOneByOrFail({ email: UserData.email });
+    if (
+      (await argon2.verify(user.hashedPassword, UserData.password)) === false
+    ) {
+      throw new Error("invalid password");
+    } else {
+      payload = { email: user.email, role: user.role };
+      const token = jwt.sign(payload, "mysupersecretkey");
+      return { jwt: token, user };
     }
   }
 
@@ -66,5 +75,14 @@ export class UserResolver {
   @Query(() => String)
   async adminQuery() {
     return "you are admin";
+  }
+
+  @Query(() => UserInfo)
+  async whoAmI(@Ctx() ctx: { email: string; role: string }) {
+    if (ctx.email !== undefined) {
+      return { ...ctx, isLoggedIn: true };
+    } else {
+      return { isLoggedIn: false };
+    }
   }
 }
