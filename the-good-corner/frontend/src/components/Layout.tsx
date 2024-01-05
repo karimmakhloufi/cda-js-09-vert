@@ -6,29 +6,24 @@ import Header from "./Header";
 
 export const UserContext = createContext({
   isLoggedIn: false,
-  refetch: () => {},
+  refetchLogin: () => {},
 });
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const { data, loading, error, refetch } = useQuery<{
     whoAmI: { isLoggedIn: boolean };
-  }>(GET_AUTH_INFO, {
-    onCompleted: () => {
-      console.log("fetch login");
-    },
-  });
+  }>(GET_AUTH_INFO);
 
   if (loading) {
     return <p>Loading</p>;
   }
   if (error) {
-    return <p>Loading</p>;
+    return <p>Error</p>;
   }
   if (data) {
-    console.log("auth data", data.whoAmI);
     return (
       <UserContext.Provider
-        value={{ isLoggedIn: data.whoAmI.isLoggedIn, refetch }}
+        value={{ isLoggedIn: data.whoAmI.isLoggedIn, refetchLogin: refetch }}
       >
         <main className="main-content">
           <Header />

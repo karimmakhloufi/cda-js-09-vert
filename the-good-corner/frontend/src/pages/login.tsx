@@ -1,16 +1,16 @@
 import { UserContext } from "@/components/Layout";
-import { LOGIN } from "@/graphql/mutations/mutations";
-import { useMutation } from "@apollo/client";
+import { LOGIN } from "@/graphql/queries/queries";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
   const authInfo = useContext(UserContext);
-  const [handleLogin] = useMutation(LOGIN, {
+  const [handleLogin] = useLazyQuery(LOGIN, {
     async onCompleted(data) {
-      localStorage.setItem("jwt", data.login.jwt);
-      authInfo.refetch();
+      localStorage.setItem("jwt", data.login);
+      authInfo.refetchLogin();
       router.push("/");
     },
   });
@@ -22,18 +22,13 @@ const LoginPage = () => {
           e.preventDefault();
           const form = e.target;
           const formData = new FormData(form as HTMLFormElement);
-
-          // Or you can work with it as a plain object:
           const formJson = Object.fromEntries(formData.entries());
-          // console.log(formJson);
 
           handleLogin({
             variables: {
               userData: formJson,
             },
           });
-
-          // router.back();
         }}
         className="text-field-with-button"
       >

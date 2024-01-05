@@ -78,7 +78,8 @@ const Header = () => {
                   className="button button-primary"
                   onClick={() => {
                     localStorage.removeItem("jwt");
-                    // refetchQueries
+                    authInfo.refetchLogin();
+                    router.push("/");
                   }}
                 >
                   Logout

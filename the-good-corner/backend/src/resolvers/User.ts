@@ -56,7 +56,7 @@ export class UserResolver {
     }
   }
 
-  @Mutation(() => UserInfo)
+  @Query(() => String)
   async login(@Arg("UserData") UserData: UserInput) {
     let payload: { email: string; role: UserRoleType };
     const user = await User.findOneByOrFail({ email: UserData.email });
@@ -67,7 +67,7 @@ export class UserResolver {
     } else {
       payload = { email: user.email, role: user.role };
       const token = jwt.sign(payload, "mysupersecretkey");
-      return { jwt: token, user };
+      return token;
     }
   }
 

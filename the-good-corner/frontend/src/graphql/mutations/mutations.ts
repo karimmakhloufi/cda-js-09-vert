@@ -13,11 +13,3 @@ export const REGISTER = gql`
     register(newUserData: $newUserData)
   }
 `;
-
-export const LOGIN = gql`
-  mutation Mutation($userData: UserInput!) {
-    login(UserData: $userData) {
-      jwt
-    }
-  }
-`;
