@@ -1,6 +1,6 @@
 import { UserContext } from "@/components/Layout";
 import { LOGIN } from "@/graphql/queries/queries";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 

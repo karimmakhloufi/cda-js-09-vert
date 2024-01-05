@@ -3,13 +3,9 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@apollo/client";
 import { useContext } from "react";
 import { UserContext } from "./Layout";
-import { GET_ALL_CATEGORIES, GET_AUTH_INFO } from "../graphql/queries/queries";
+import { GET_ALL_CATEGORIES } from "../graphql/queries/queries";
 
 const Header = () => {
-  const { data: logindata } = useQuery<{
-    whoAmI: { isLoggedIn: boolean };
-  }>(GET_AUTH_INFO);
-  console.log("logindata", logindata);
   const authInfo = useContext(UserContext);
   const { loading, error, data } = useQuery<{
     allCategories: {
