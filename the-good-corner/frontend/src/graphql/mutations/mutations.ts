@@ -13,3 +13,9 @@ export const REGISTER = gql`
     register(newUserData: $newUserData)
   }
 `;
+
+export const DELETE_USER = gql`
+  mutation Mutation($userId: String!) {
+    deleteUser(userId: $userId)
+  }
+`;

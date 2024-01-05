@@ -34,10 +34,21 @@ class UserInput implements Partial<User> {
 
 @Resolver()
 export class UserResolver {
+  @Authorized("admin")
   @Query(() => [User])
   async getAllUsers() {
     const result = await User.find();
     return result;
+  }
+
+  @Authorized("admin")
+  @Mutation(() => String)
+  async deleteUser(@Arg("userId") userId: string) {
+    const userToDelete = await User.findOneByOrFail({
+      id: Number.parseInt(userId),
+    });
+    await userToDelete.remove();
+    return "user removed";
   }
 
   @Mutation(() => String)
