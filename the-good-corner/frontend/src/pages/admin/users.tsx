@@ -1,7 +1,15 @@
 import { GET_ALL_USERS } from "../../graphql/queries/queries";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_USER } from "../../graphql/mutations/mutations";
+import { UserContext } from "../../components/Layout";
+import { useContext } from "react";
+import { useRouter } from "next/router";
 const UserAdminPage = () => {
+  const router = useRouter();
+  const authInfo = useContext(UserContext);
+  if (authInfo.role !== "admin") {
+    router.push("/login");
+  }
   const { loading, error, data } = useQuery<{
     getAllUsers: {
       id: string;
