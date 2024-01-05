@@ -64,6 +64,7 @@ const Header = () => {
           <>
             {authInfo.isLoggedIn ? (
               <>
+                {authInfo.role === "admin" ? <p>Admin panel</p> : null}
                 <Link href="/ad/new" className="button link-button">
                   <span className="mobile-short-label">Publier</span>
                   <span className="desktop-long-label">
