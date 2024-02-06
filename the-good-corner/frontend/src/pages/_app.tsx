@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000",
+  uri: process.env.NEXT_PUBLIC_BACKEND_URL,
 });
 
 const authLink = setContext((_, { headers }) => {

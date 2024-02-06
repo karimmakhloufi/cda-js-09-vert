@@ -1,10 +1,6 @@
 services:
   backend:
     build: ./backend
-    ports:
-      - 4000:4000
-    volumes:
-      - ./backend/src:/app/src
     healthcheck:
       test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:4000'' --data ''{"query":"query { __typename }"}'' || exit 1'
       interval: 5s
@@ -15,17 +11,17 @@ services:
         condition: service_healthy
   frontend:
     build: ./frontend
-    env_file: .env.dev
-    ports:
-      - 3000:3000
-    volumes:
-      - ./frontend/src:/app/src
+    env_file: .env.test
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:3000' || exit 1"
+      interval: 5s
+      timeout: 5s
+      retries: 10
     depends_on:
       backend:
         condition: service_healthy
   db:
     image: postgres
-    restart: always
     environment:
       POSTGRES_PASSWORD: example
     healthcheck:
@@ -33,18 +29,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-    volumes:
-      - pgdata:/var/lib/postgresql/data
   imagesupload:
     build: ./imagesupload
+  e2e:
+    build: ./e2e
     volumes:
-      - ./imagesupload/src:/app/src
-      - ./imagesupload/uploads:/app/uploads
-    ports:
-      - 8000:8000
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
-volumes:
-  pgdata:
+      - ./e2e/playwright-report:/app/playwright-report
+      - ./e2e/test-results:/app/test-results
+    depends_on:
+      frontend:
+        condition: service_healthy
