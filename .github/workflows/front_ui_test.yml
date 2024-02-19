@@ -8,7 +8,5 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: npm ci
       - name: Run interface test
-        run: cd the-good-corner && cd frontend && npm run test
+        run: cd the-good-corner && cd frontend && npm ci && npm run test
