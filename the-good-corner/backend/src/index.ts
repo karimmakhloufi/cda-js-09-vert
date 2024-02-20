@@ -4,7 +4,7 @@ import { ApolloServer } from "@apollo/server";
 import * as jwt from "jsonwebtoken";
 import * as argon2 from "argon2";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import dataSource from "../config/db";
+import dataSource from "./config/db";
 import { CategoryResolver } from "./resolvers/Category";
 import { AdResolver } from "./resolvers/Ad";
 import { Category } from "./entities/category";
