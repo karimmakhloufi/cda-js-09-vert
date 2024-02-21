@@ -10,6 +10,8 @@ RUN npm install
 COPY tsconfig.json tsconfig.json
 COPY src src
 
-CMD npm start
+RUN npm run build
+
+CMD npm run startprod
 
 

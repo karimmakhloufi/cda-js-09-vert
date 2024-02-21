@@ -7,7 +7,7 @@ const dataSource = new DataSource({
   username: "postgres",
   password: "example",
   database: "postgres",
-  entities: ["src/entities/*.ts"],
+  entities: [`${__dirname}/../entities/*{.js,.ts}`],
   synchronize: true,
   logging: ["query", "error"],
 });
