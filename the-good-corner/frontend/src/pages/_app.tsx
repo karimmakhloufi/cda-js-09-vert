@@ -11,9 +11,12 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import getConfig from "next/config";
+
+const { publicRuntimeConfig } = getConfig();
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_BACKEND_URL,
+  uri: publicRuntimeConfig.BACKEND_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
