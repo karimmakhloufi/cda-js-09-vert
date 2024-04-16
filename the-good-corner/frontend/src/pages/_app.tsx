@@ -11,12 +11,21 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import getConfig from "next/config";
 
-const { publicRuntimeConfig } = getConfig();
+let backend_url;
+
+if (typeof window !== "undefined") {
+  if (window.location.origin.startsWith("http://localhost")) {
+    backend_url = "http://localhost:4000";
+  } else {
+    backend_url = "/graphql";
+  }
+}
+
+console.log("backend url", backend_url);
 
 const httpLink = createHttpLink({
-  uri: publicRuntimeConfig.BACKEND_URL,
+  uri: backend_url,
 });
 
 const authLink = setContext((_, { headers }) => {

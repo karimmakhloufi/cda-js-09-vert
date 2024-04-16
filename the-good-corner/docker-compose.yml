@@ -15,6 +15,7 @@ services:
         condition: service_healthy
   frontend:
     build: ./frontend
+    command: npm start
     env_file: .env.dev
     ports:
       - 3000:3000
