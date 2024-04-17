@@ -12,7 +12,8 @@ import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
-let backend_url;
+let backend_url = "/graphql";
+/*
 
 if (typeof window !== "undefined") {
   if (window.location.origin.startsWith("http://localhost")) {
@@ -21,6 +22,7 @@ if (typeof window !== "undefined") {
     backend_url = "/graphql";
   }
 }
+*/
 
 console.log("backend url", backend_url);
 

@@ -24,7 +24,7 @@ const NewAd = () => {
     router.push("/login");
   }
   const [file, setFile] = useState<File>();
-  const [imageURL, setImageURL] = useState<String>();
+  const [imageURL, setImageURL] = useState<string>();
 
   const {
     register,
@@ -65,7 +65,7 @@ const NewAd = () => {
             adData: {
               title: data.title,
               description: data.description,
-              imageUrl: "http://localhost:8000" + imageURL,
+              imageUrl: imageURL,
               location: data.location,
               price: Number.parseInt(data.price),
               category: Number.parseInt(data.category),
@@ -110,7 +110,7 @@ const NewAd = () => {
           onChange={async (e) => {
             if (e.target.files) {
               setFile(e.target.files[0]);
-              const url = "http://localhost:8000/upload";
+              const url = "/upload";
               const formData = new FormData();
               formData.append(
                 "file",
@@ -129,11 +129,7 @@ const NewAd = () => {
         {imageURL ? (
           <>
             <br />
-            <img
-              width={"500"}
-              alt="uploadedImg"
-              src={"http://localhost:8000" + imageURL}
-            />
+            <img width={"500"} alt="uploadedImg" src={imageURL} />
             <br />
           </>
         ) : null}

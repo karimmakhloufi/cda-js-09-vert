@@ -3,14 +3,14 @@ import axios from "axios";
 
 const UploadPage = () => {
   const [file, setFile] = useState<File>();
-  const [imageURL, setImageURL] = useState<String>();
+  const [imageURL, setImageURL] = useState<string>();
   return (
     <div>
       <form
         onSubmit={async (event) => {
           event.preventDefault();
           if (file) {
-            const url = "http://localhost:8000/upload";
+            const url = "/upload";
             const formData = new FormData();
             formData.append("file", file, file.name);
             try {
@@ -38,11 +38,7 @@ const UploadPage = () => {
       {imageURL ? (
         <>
           <br />
-          <img
-            width={"500"}
-            alt="uploadedImg"
-            src={"http://localhost:8000" + imageURL}
-          />
+          <img width={"500"} alt="uploadedImg" src={imageURL} />
           <br />
         </>
       ) : null}
