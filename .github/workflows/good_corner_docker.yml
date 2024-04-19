@@ -23,3 +23,10 @@ jobs:
           context: "{{defaultContext}}:the-good-corner/frontend"
           file: "Dockerfile.prod"
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/tgc-front:latest
+      - name: Build and push server
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:the-good-corner/backend"
+          file: "Dockerfile.prod"
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tgc-back:latest
