@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./backend
+    image: karimwcs/tgc-back
     healthcheck:
       test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:4000'' --data ''{"query":"query { __typename }"}'' || exit 1'
       interval: 5s
@@ -10,7 +10,7 @@ services:
       db:
         condition: service_healthy
   frontend:
-    build: ./frontend
+    image: karimwcs/tgc-front
     command: npm start
     depends_on:
       backend:
