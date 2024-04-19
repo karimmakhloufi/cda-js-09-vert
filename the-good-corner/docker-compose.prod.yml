@@ -1,8 +1,6 @@
 services:
   backend:
     build: ./backend
-    volumes:
-      - ./backend/src:/app/src
     healthcheck:
       test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:4000'' --data ''{"query":"query { __typename }"}'' || exit 1'
       interval: 5s
@@ -14,8 +12,6 @@ services:
   frontend:
     build: ./frontend
     command: npm start
-    volumes:
-      - ./frontend/src:/app/src
     depends_on:
       backend:
         condition: service_healthy
@@ -34,12 +30,9 @@ services:
   imagesupload:
     build: ./imagesupload
     volumes:
-      - ./imagesupload/src:/app/src
       - ./imagesupload/uploads:/app/uploads
   adminer:
     image: adminer
-    ports:
-      - 8080:8080
   gateway:
     image: nginx
     ports:
