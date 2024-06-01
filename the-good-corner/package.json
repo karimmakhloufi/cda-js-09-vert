@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "startprod": "docker-compose -f docker-compose.prod.yml up --build"
+    "startprod": "docker-compose -f docker-compose.prod.yml up"
   }
 }
