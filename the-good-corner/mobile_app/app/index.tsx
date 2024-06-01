@@ -1,4 +1,6 @@
-import { Text, View, Image } from "react-native";
+import { View, Image } from "react-native";
+import { Card, Text } from "@ui-kitten/components";
+
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 
 const GET_ALL_ADS = gql`
@@ -37,13 +39,18 @@ export default function Index() {
       }}
     >
       {data.getAllAds.map((el: any) => (
-        <View key={el.id}>
+        <Card
+          key={el.id}
+          onPress={() => {
+            console.log("pressed");
+          }}
+        >
           <Text>{el.title}</Text>
           <Image
             style={{ width: 300, height: 200, resizeMode: "contain" }}
             src={backend_url + el.imageUrl}
           />
-        </View>
+        </Card>
       ))}
     </View>
   );

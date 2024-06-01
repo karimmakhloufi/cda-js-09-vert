@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
 import Constants from "expo-constants";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
 
 export default function RootLayout() {
   let hostIP = "";
@@ -14,10 +16,12 @@ export default function RootLayout() {
     cache: new InMemoryCache(),
   });
   return (
-    <ApolloProvider client={client}>
-      <Stack>
-        <Stack.Screen name="index" />
-      </Stack>
-    </ApolloProvider>
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <ApolloProvider client={client}>
+        <Stack>
+          <Stack.Screen name="index" />
+        </Stack>
+      </ApolloProvider>
+    </ApplicationProvider>
   );
 }
